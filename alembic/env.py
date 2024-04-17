@@ -10,6 +10,7 @@ from alembic import context
 from api_v1.models import *
 from core.models import Base
 from core.config import settings
+from users.models import *
 
 
 config = context.config
