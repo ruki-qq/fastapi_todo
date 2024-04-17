@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
 from api_v1.notes import *
+from api_v1.tasks import *
 from core.models import Base
 from core.config import settings
 
