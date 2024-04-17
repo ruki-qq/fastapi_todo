@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from sqlalchemy import ForeignKey, String, Text
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import declared_attr, Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
@@ -23,14 +23,3 @@ class UserRelationMixin:
     @declared_attr
     def user(self) -> Mapped["User"]:
         return relationship(back_populates=self._user_back_populates)
-
-
-class NoteTaskMixin:
-    title: Mapped[str] = mapped_column(String(50))
-    text: Mapped[str] = mapped_column(Text, default="", server_default="")
-
-    def __str__(self):
-        return f"{self.__class__.__name__} id={self.id} title={self.title}"
-
-    def __repr__(self):
-        return str(self)
