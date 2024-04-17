@@ -1,5 +1,3 @@
-from typing import Final
-
 from pydantic import BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -16,10 +14,13 @@ class DBSettings(EnvVars, BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     @property
-    def url(self) -> str:
-        return f"postgresql+asyncpg://{self.db_user}:{self.db_pass}@{self.db_host}:{self.db_port}/{self.db_name}"
+    def db_url(self) -> str:
+        return (
+            "postgresql+asyncpg://"
+            f"{self.db_user}:{self.db_pass}@{self.db_host}:{self.db_port}/{self.db_name}"
+        )
 
-    echo: bool = True
+    db_echo: bool = True
 
 
 class Settings(DBSettings):
