@@ -1,4 +1,6 @@
-from sqlalchemy import String, Text
+from datetime import datetime
+
+from sqlalchemy import String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from core.models import Base
@@ -7,6 +9,10 @@ from core.models import Base
 class User(Base):
     username: Mapped[str] = mapped_column(String(16))
     email: Mapped[str] = mapped_column(String(128))
+    register_at: Mapped[datetime] = mapped_column(
+        default=datetime.now,
+        server_default=func.now(),
+    )
 
     first_name: Mapped[str | None] = mapped_column(String(64))
     last_name: Mapped[str | None] = mapped_column(String(64))
