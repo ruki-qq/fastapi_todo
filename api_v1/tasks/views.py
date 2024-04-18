@@ -1,26 +1,12 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter
+
+from api_v1.tasks.crud import task_crud, task_dependencies
+from api_v1.tasks.schemas import Task
+from api_v1.utils import generate_routes
 
 router = APIRouter(tags=["tasks"])
 
-
-@router.get("")
-async def get_tasks():
-    pass
-
-
-@router.get("/{task_id}")
-async def get_task_by_id(task_id: int):
-    pass
-
-
-@router.post("", status_code=status.HTTP_201_CREATED)
-async def create_task():
-    pass
-
-
-@router.patch("/{task_id}")
-async def update_task(task_id: int):
-    pass
+generate_routes(router, task_crud, task_dependencies, Task)
 
 
 @router.post("/{task_id}/complete")
