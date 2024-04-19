@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from annotated_types import MaxLen, MinLen
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, PositiveInt
 
 from api_v1.mixins import NoteTaskSchemaMixin
 
@@ -22,4 +22,4 @@ class NoteUpdate(NoteBase):
 class Note(NoteBase):
     model_config = ConfigDict(from_attributes=True)
 
-    id: int
+    id: PositiveInt
