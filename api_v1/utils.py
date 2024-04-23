@@ -72,36 +72,38 @@ def generate_routes(
     router: APIRouter,
     crud: BaseObjectCRUD,
     dependencies: BaseObjectDependencies,
-    model: Type[ApiItem],
+    model_schema: Type[ApiItem],
+    create_schema: ApiCreate,
+    update_schema: ApiUpdate,
 ):
-    @router.get("", response_model=list[model])
+    @router.get("", response_model=list[model_schema])
     async def get_all(
         session: AsyncSession = Depends(db_helper.scoped_session_dependency),
-    ) -> list[model]:
+    ) -> list[model_schema]:
         return await crud.get_objects(session)
 
-    @router.get("/{item_id}", response_model=model)
-    async def get_one(item: model = Depends(dependencies.item_by_id)) -> model:
+    @router.get("/{item_id}", response_model=model_schema)
+    async def get_one(item: model_schema = Depends(dependencies.item_by_id)) -> model_schema:
         return item
 
-    @router.post("", response_model=model)
+    @router.post("", response_model=model_schema)
     async def create(
-        item_in: ApiCreate,
+        item_in: create_schema,
         session: AsyncSession = Depends(db_helper.scoped_session_dependency),
-    ) -> model:
+    ) -> model_schema:
         return await crud.create_object(session, item_in)
 
-    @router.patch("/{item_id}", response_model=model)
+    @router.patch("/{item_id}", response_model=model_schema)
     async def update(
-        item_update: ApiUpdate,
-        item: model = Depends(dependencies.item_by_id),
+        item_update: update_schema,
+        item: model_schema = Depends(dependencies.item_by_id),
         session: AsyncSession = Depends(db_helper.scoped_session_dependency),
-    ) -> model:
+    ) -> model_schema:
         return await crud.update_object(session, item, item_update)
 
     @router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
     async def delete(
-        item: model = Depends(dependencies.item_by_id),
+        item: model_schema = Depends(dependencies.item_by_id),
         session: AsyncSession = Depends(db_helper.scoped_session_dependency),
     ) -> None:
         await crud.delete_object(session, item)
