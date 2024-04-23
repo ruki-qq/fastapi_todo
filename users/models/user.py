@@ -7,8 +7,8 @@ from core.models import Base
 
 
 class User(Base):
-    username: Mapped[str] = mapped_column(String(16))
-    email: Mapped[str] = mapped_column(String(128))
+    username: Mapped[str] = mapped_column(String(16), unique=True)
+    email: Mapped[str] = mapped_column(String(128), unique=True)
     register_at: Mapped[datetime] = mapped_column(
         default=datetime.now,
         server_default=func.now(),

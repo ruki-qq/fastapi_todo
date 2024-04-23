@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from annotated_types import MaxLen, MinLen
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, PositiveInt
 
 from api_v1.mixins import NoteTaskSchemaMixin
 
@@ -24,6 +24,6 @@ class TaskUpdate(TaskBase):
 class Task(TaskBase):
     model_config = ConfigDict(from_attributes=True)
 
-    id: int
+    id: PositiveInt
     in_process: bool
     finished: bool
