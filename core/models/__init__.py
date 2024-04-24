@@ -1,3 +1,7 @@
-__all__ = ("Base",)
+__all__ = (
+    "Base",
+    "UserRelationMixin",
+)
 
 from .base import Base
+from .mixins import UserRelationMixin

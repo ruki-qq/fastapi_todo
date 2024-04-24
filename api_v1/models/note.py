@@ -1,6 +1,6 @@
 from api_v1.mixins import NoteTaskModelMixin
-from core.models import Base
+from core.models import Base, UserRelationMixin
 
 
-class Note(NoteTaskModelMixin, Base):
-    pass
+class Note(UserRelationMixin, NoteTaskModelMixin, Base):
+    _user_back_populates = "notes"

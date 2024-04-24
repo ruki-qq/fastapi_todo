@@ -2,10 +2,12 @@ from sqlalchemy import Boolean
 from sqlalchemy.orm import Mapped, mapped_column
 
 from api_v1.mixins import NoteTaskModelMixin
-from core.models import Base
+from core.models import Base, UserRelationMixin
 
 
-class Task(NoteTaskModelMixin, Base):
+class Task(UserRelationMixin, NoteTaskModelMixin, Base):
+    _user_back_populates = "tasks"
+
     in_process: Mapped[bool] = mapped_column(
         Boolean, default=True, server_default="True"
     )
